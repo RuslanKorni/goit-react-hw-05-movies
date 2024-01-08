@@ -1,28 +1,44 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { AiOutlineFileImage } from 'react-icons/ai';
 import PropTypes from 'prop-types';
+import { List, Li, Links, Card, Img } from './MoviesList.styled';
 
-const MoviesList = ({movies}) => {
-    const location = useLocation();
-    return (
-        <>
-        <ul>
-            {movies.map(({id, title}) => {
-                return <li key={id}>
-                    <Link to={`/movies/${id}`} state={{ from: location }}>{title}</Link>
-                </li>
-            })}
-        </ul>
-        </>
-    )
-}
+const MoviesList = ({ movies }) => {
+  const location = useLocation();
+  return (
+    <>
+      <List>
+        {movies.map(({ id, title, poster_path }) => {
+          return (
+            <Li key={id}>
+              <Links to={`/movies/${id}`} state={{ from: location }}>
+                <Card>
+                  {poster_path ? (
+                    <Img
+                      src={`https://image.tmdb.org/t/p/w200${poster_path}`}
+                      alt={title}
+                    />
+                  ) : (
+                    <AiOutlineFileImage size={200} />
+                  )}
+                  {title}
+                </Card>
+              </Links>
+            </Li>
+          );
+        })}
+      </List>
+    </>
+  );
+};
 
 MoviesList.propTypes = {
-    movies: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-      })
-    ),
-  };
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+    })
+  ),
+};
 
 export default MoviesList;
