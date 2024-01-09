@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { fetchDetailsMovie } from 'service/fetchAPI';
 import ButtonBack from 'components/ButtonBack/ButtonBack';
+import Loader from 'components/Loader/Loader';
 
 const MoviesDetails = () => {
   const [moviesDetails, setMoviesDetails] = useState({});
 
   const { movieId } = useParams();
   const location = useLocation();
-  const buttonBack = location.state?.from ?? `/`;
+  const buttonBack = useRef(location.state?.from ?? `/`);
 
   useEffect(() => {
     fetchDetailsMovie(movieId).then(setMoviesDetails);
@@ -19,7 +20,7 @@ const MoviesDetails = () => {
 
   return (
     <>
-    <ButtonBack to={buttonBack} />
+      <ButtonBack to={buttonBack.current} />
       <div>
         <img
           src={`https://image.tmdb.org/t/p/w300${poster_path}`}
@@ -48,7 +49,9 @@ const MoviesDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Outlet/>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

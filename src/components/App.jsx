@@ -1,20 +1,12 @@
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from '../pages/Home/Home';
-import Movies from '../pages/Movies/Movies';
-import Cast from 'components/Cast/Cast';
-import MoviesDetails from '../pages/MoviesDetails/MoviesDetails';
-import Layout from './Layout/Layout';
-import Reviews from 'components/Reviews/Reviews';
-
-// '/' - компонент Home, домашня сторінка зі списком популярних кінофільмів.
-
-// '/movies' - компонент Movies, сторінка пошуку кінофільмів за ключовим словом.
-
-// '/movies/:movieId' - компонент MovieDetails, сторінка з детальною інформацією про кінофільм.
-
-// /movies/:movieId/cast - компонент Cast, інформація про акторський склад. Рендериться на сторінці MovieDetails.
-
-// /movies/:movieId/reviews - компонент Reviews, інформація про огляди. Рендериться на сторінці MovieDetails.
+import Layout from './Layout/Layout'; 
+const Home = lazy(() => import("../pages/Home/Home"));
+const Movies = lazy(() => import("../pages/Movies/Movies"));
+const Cast = lazy(() => import("components/Cast/Cast"));
+const MoviesDetails = lazy(() => import("../pages/MoviesDetails/MoviesDetails")); 
+const Reviews = lazy(() => import("components/Reviews/Reviews"));
+const NotFound = lazy(() => import("./NotFound/NotFound"));
 
 export const App = () => {
   return (
@@ -26,6 +18,7 @@ export const App = () => {
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

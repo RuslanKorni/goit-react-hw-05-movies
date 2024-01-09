@@ -5,9 +5,10 @@ import {fetchReviews} from 'service/fetchAPI';
 const Reviews = () => {
     const [movieReviews, setMovieReviews] = useState([]);
     const {movieId} = useParams();
+    console.log(movieId);
 
     useEffect(() => {
-        fetchReviews().then(({results}) => {
+        fetchReviews(movieId).then(({results}) => {
             setMovieReviews(results)
         })
     }, [movieId]);
