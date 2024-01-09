@@ -3,6 +3,8 @@ import { AiOutlineFileImage } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 import { List, Li, Links, Card, Img } from './MoviesList.styled';
 
+//
+
 const MoviesList = ({ movies }) => {
   const location = useLocation();
   return (
